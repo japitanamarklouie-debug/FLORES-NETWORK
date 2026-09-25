@@ -1,330 +1,261 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FLORES NETWORK - Payment Reminder</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Inter:wght@400;500;600&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Reminder - Flores Network</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-cyan: #00f3ff;
+            --neon-purple: #b026ff;
+            --neon-red: #ff2a2a;
+            --bg-dark: #050505;
+            --panel-bg: rgba(10, 15, 30, 0.85);
+        }
+        
+        body {
+            background: radial-gradient(circle at center, #1a1a24 0%, #000 100%);
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-  * { margin:0; padding:0; box-sizing:border-box; }
+        .container {
+            max-width: 450px;
+            width: 100%;
+            background: var(--panel-bg);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            border-radius: 15px;
+            padding: 35px 25px;
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.15), inset 0 0 20px rgba(0, 243, 255, 0.05);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
 
-  :root {
-    --bg: #020617;
-    --card-bg: rgba(8, 15, 30, 0.75);
-    --text: #e0f2fe;
-    --accent: #22d3ee;
-    --accent2: #67e8f9;
-    --border: rgba(34, 211, 238, 0.35);
-    --glow: 0 0 20px rgba(34, 211, 238, 0.4);
-  }
+        /* Futuristic Scanline Effect */
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 4px, 3px 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
 
-  body.light {
-    --bg: #0c4a6e;
-    --card-bg: rgba(255,255,255,0.9);
-    --text: #0f172a;
-    --accent: #0284c7;
-    --accent2: #0ea5e9;
-    --border: rgba(14, 165, 233, 0.4);
-  }
+        h1, h2 {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            margin: 0;
+        }
 
-  body {
-    background: var(--bg);
-    background-image: 
-      radial-gradient(ellipse at top, rgba(34, 211, 238, 0.15), transparent 50%),
-      radial-gradient(ellipse at bottom, rgba(56, 189, 248, 0.1), transparent 50%),
-      linear-gradient(to bottom, #020617, #0f172a);
-    color: var(--text);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 16px;
-    font-family: 'Inter', sans-serif;
-  }
+        .brand {
+            font-size: 2.2rem;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 15px var(--neon-cyan);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
 
-  .card {
-    background: var(--card-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: 24px;
-    max-width: 400px;
-    width: 100%;
-    padding: 36px 26px 40px;
-    border: 1px solid var(--border);
-    box-shadow: var(--glow), 0 25px 50px rgba(0,0,0,0.5);
-    position: relative;
-    overflow: hidden;
-  }
+        .sub-brand {
+            font-size: 0.85rem;
+            color: #9bb1c2;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
 
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  }
+        .title {
+            font-size: 1.3rem;
+            color: #fff;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 8px rgba(255,255,255,0.6);
+        }
 
-  .theme-toggle {
-    position: absolute;
-    top: 18px;
-    right: 18px;
-    background: rgba(34, 211, 238, 0.1);
-    border: 1px solid var(--border);
-    border-radius: 50%;
-    width: 42px;
-    height: 42px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 18px;
-    transition: 0.3s;
-  }
-  .theme-toggle:hover {
-    background: rgba(34, 211, 238, 0.2);
-    box-shadow: 0 0 15px rgba(34, 211, 238, 0.5);
-  }
+        .card {
+            background: rgba(0, 30, 45, 0.6);
+            border-left: 4px solid var(--neon-cyan);
+            border-right: 1px solid rgba(0, 243, 255, 0.2);
+            border-top: 1px solid rgba(0, 243, 255, 0.2);
+            border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
 
-  .logo {
-    text-align: center;
-    margin-bottom: 8px;
-  }
-  .logo h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 34px;
-    font-weight: 800;
-    letter-spacing: 4px;
-    color: var(--accent);
-    text-shadow: 0 0 15px rgba(34, 211, 238, 0.6);
-  }
-  .logo small {
-    font-size: 11px;
-    letter-spacing: 3px;
-    color: #94a3b8;
-    text-transform: uppercase;
-  }
+        .date-box {
+            background: var(--neon-cyan);
+            color: #000;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            min-width: 65px;
+            box-shadow: 0 0 15px var(--neon-cyan);
+        }
 
-  .title {
-    text-align: center;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--accent2);
-    margin: 22px 0 26px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-  }
+        .date-box .day { font-size: 2rem; font-weight: 900; line-height: 1; }
+        .date-box .month { font-size: 0.9rem; font-weight: 700; margin-top: 2px; }
+        
+        .card-text { font-size: 1rem; line-height: 1.4; color: #d0e3ff; }
+        .card-text strong { color: var(--neon-cyan); }
+        
+        .alert {
+            background: rgba(40, 5, 5, 0.8);
+            border: 1px solid var(--neon-red);
+            border-left: 4px solid var(--neon-red);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 0 15px rgba(255, 42, 42, 0.3);
+            animation: pulse 2s infinite;
+        }
 
-  .due-box {
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 18px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 18px;
-    box-shadow: inset 0 0 20px rgba(34, 211, 238, 0.05);
-  }
-  .due-left {
-    background: linear-gradient(135deg, #22d3ee, #0284c7);
-    border-radius: 14px;
-    padding: 12px 16px;
-    text-align: center;
-    min-width: 82px;
-    box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
-  }
-  .due-day {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 36px;
-    font-weight: 800;
-    color: #fff;
-    line-height: 1;
-  }
-  .due-month {
-    font-size: 11px;
-    color: rgba(255,255,255,0.9);
-    letter-spacing: 1px;
-  }
-  .due-text {
-    font-size: 13.5px;
-    color: #cbd5e1;
-    line-height: 1.5;
-  }
-  .due-text strong {
-    color: var(--accent);
-  }
+        .alert h3 {
+            color: var(--neon-red);
+            margin: 0 0 8px 0;
+            font-size: 1rem;
+            text-shadow: 0 0 8px var(--neon-red);
+            letter-spacing: 1px;
+        }
 
-  .warning {
-    background: rgba(127, 29, 29, 0.25);
-    border: 1px solid #f87171;
-    border-radius: 16px;
-    padding: 14px 16px;
-    margin-bottom: 28px;
-    text-align: center;
-  }
-  .warning h3 {
-    color: #fca5a5;
-    font-size: 13px;
-    font-weight: 700;
-    margin-bottom: 4px;
-    letter-spacing: 0.5px;
-  }
-  .warning p {
-    font-size: 12.5px;
-    color: #fecaca;
-  }
+        .alert p { margin: 0; font-size: 0.9rem; color: #ffd6d6; }
 
-  .pay-title {
-    text-align: center;
-    font-family: 'Orbitron', sans-serif;
-    color: var(--accent);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 3px;
-    margin-bottom: 18px;
-    text-transform: uppercase;
-  }
+        .qr-section {
+            text-align: center;
+            background: rgba(15, 20, 35, 0.6);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(176, 38, 255, 0.4);
+            box-shadow: 0 0 25px rgba(176, 38, 255, 0.15);
+            margin-bottom: 25px;
+            position: relative;
+        }
 
-  .qr-card {
-    background: rgba(15, 23, 42, 0.5);
-    border: 1px solid var(--border);
-    border-radius: 22px;
-    padding: 20px;
-    text-align: center;
-    max-width: 300px;
-    margin: 0 auto;
-    box-shadow: 0 0 30px rgba(34, 211, 238, 0.15);
-  }
+        .qr-section h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-purple);
+            text-shadow: 0 0 10px var(--neon-purple);
+            margin-top: 0;
+            letter-spacing: 2px;
+        }
 
-  .qr-inner {
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 16px;
-    display: inline-block;
-    box-shadow: 0 0 25px rgba(34, 211, 238, 0.3);
-  }
+        .qr-box {
+            background: #fff;
+            padding: 10px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 15px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.4);
+        }
 
-  .qr-card img {
-    width: 230px;
-    height: 230px;
-    display: block;
-  }
+        .qr-box img {
+            width: 190px;
+            height: 190px;
+            display: block;
+            border-radius: 5px;
+        }
 
-  .qr-label {
-    margin-top: 14px;
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--accent);
-    letter-spacing: 1px;
-  }
+        .account-details {
+            font-size: 0.95rem;
+            color: #a4b8d1;
+            line-height: 1.6;
+        }
 
-  .footer {
-    text-align: center;
-    margin-top: 30px;
-    font-size: 13px;
-    color: #94a3b8;
-    line-height: 1.7;
-  }
-  .footer .main {
-    color: #e2e8f0;
-    font-weight: 500;
-  }
+        .account-details .name {
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin: 8px 0;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 5px rgba(255,255,255,0.5);
+        }
+        
+        .footer {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #6c849c;
+            border-top: 1px solid rgba(0, 243, 255, 0.2);
+            padding-top: 20px;
+            line-height: 1.6;
+        }
 
-  @media (max-width: 480px) {
-    .card { padding: 28px 18px 32px; }
-    .logo h1 { font-size: 28px; }
-    .qr-card img { width: 200px; height: 200px; }
-  }
-</style>
+        .footer em { 
+            color: var(--neon-cyan); 
+            font-style: normal; 
+            font-weight: 600;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-top: 10px;
+            text-shadow: 0 0 5px rgba(0, 243, 255, 0.4);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 10px rgba(255, 42, 42, 0.2); }
+            50% { box-shadow: 0 0 25px rgba(255, 42, 42, 0.6); }
+            100% { box-shadow: 0 0 10px rgba(255, 42, 42, 0.2); }
+        }
+    </style>
 </head>
 <body>
-  <div class="card">
-    <div class="theme-toggle" id="themeToggle">🌙</div>
+    <div class="container">
+        <h1 class="brand">FLORES</h1>
+        <div class="sub-brand">Network and Data Solution</div>
+        <h2 class="title">PAYMENT REMINDER</h2>
 
-    <div class="logo">
-      <h1>FLORES</h1>
-      <small>NETWORK AND DATA SOLUTION</small>
+        <div class="card">
+            <div class="date-box">
+                <div class="day">29</div>
+                <div class="month">SEP</div>
+            </div>
+            <div class="card-text">
+                Your payment is due every <strong>29th of the month</strong>.<br>
+                Kindly settle on or before the <strong>3rd</strong> of the following month.
+            </div>
+        </div>
+
+        <div class="alert">
+            <h3>⚠️ CUT-OFF: 3RD OF THE FOLLOWING MONTH</h3>
+            <p>Payments after the cut-off will be processed on the next billing cycle.</p>
+        </div>
+
+        <div class="qr-section">
+            <h3>SCAN TO PAY</h3>
+            <div class="qr-box">
+                <!-- Dire na-update ang image source sa imong gi-request -->
+                <img src="gcash-qr.png" alt="GCash QR Code">
+            </div>
+            <div class="account-details">
+                Transfer fees may apply.<br>
+                <div class="name">GE****E F.</div>
+                Mobile No.: +63 995 832 ****<br>
+                User ID: *********4H91ON<br><br>
+                <strong style="color: var(--neon-cyan);">GCash • Scan to Pay</strong>
+            </div>
+        </div>
+
+        <div class="footer">
+            We appreciate your prompt payment and continued partnership.<br>
+            Thank you for being part of Flores Network and Data Solution.<br>
+            <em>Reliable connections. Real solutions.</em>
+        </div>
     </div>
-
-    <div class="title">Payment Reminder</div>
-
-    <div class="due-box">
-      <div class="due-left">
-        <div class="due-day" id="dueDay">29</div>
-        <div class="due-month" id="dueMonth">SEP</div>
-      </div>
-      <div class="due-text">
-        Your payment is due every <strong>29th</strong> of the month.<br>
-        Kindly settle on or before the <strong>3rd</strong> of the following month.
-      </div>
-    </div>
-
-    <div class="warning">
-      <h3>⚠ CUT-OFF: 3RD OF THE FOLLOWING MONTH</h3>
-      <p>Payments after the cut-off will be processed on the next billing cycle.</p>
-    </div>
-
-    <div class="pay-title">Scan to Pay</div>
-
-    <div class="qr-card">
-      <div class="qr-inner">
-        <img src="gcash-qr.png" alt="GCash QR">
-      </div>
-      <div class="qr-label">GCash • Scan to Pay</div>
-    </div>
-
-    <div class="footer">
-      <div class="main">We appreciate your prompt payment and continued partnership.</div>
-      Thank you for being part of Flores Network and Data Solution.<br>
-      <span style="opacity:0.7; font-style:italic;">Reliable connections. Real solutions.</span>
-    </div>
-  </div>
-
-<script>
-  const themeToggle = document.getElementById('themeToggle');
-  const body = document.body;
-
-  function applyTheme(theme) {
-    if (theme === 'light') {
-      body.classList.add('light');
-      themeToggle.textContent = '☀️';
-    } else {
-      body.classList.remove('light');
-      themeToggle.textContent = '🌙';
-    }
-  }
-
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme) {
-    applyTheme(savedTheme);
-  } else {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    applyTheme(prefersDark ? 'dark' : 'light');
-  }
-
-  themeToggle.addEventListener('click', () => {
-    const isLight = body.classList.toggle('light');
-    themeToggle.textContent = isLight ? '☀️' : '🌙';
-    localStorage.setItem('theme', isLight ? 'light' : 'dark');
-  });
-
-  function updateDueDate() {
-    const now = new Date();
-    let month = now.getMonth();
-    let day = now.getDate();
-    if (day > 29) {
-      month += 1;
-      if (month > 11) month = 0;
-    }
-    const monthNames = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
-    document.getElementById("dueMonth").textContent = monthNames[month];
-    document.getElementById("dueDay").textContent = "29";
-  }
-  updateDueDate();
-</script>
 </body>
 </html>
