@@ -6,17 +6,53 @@
     <title>Payment Reminder - Flores Network</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        /* CSS Variables para sa Themes */
         :root {
-            --neon-cyan: #00f3ff;
-            --neon-purple: #b026ff;
-            --neon-red: #ff2a2a;
-            --bg-dark: #050505;
+            /* Dark Mode (Default) */
+            --page-bg: radial-gradient(circle at center, #1a1a24 0%, #000 100%);
             --panel-bg: rgba(10, 15, 30, 0.85);
+            --text-main: #ffffff;
+            --text-muted: #9bb1c2;
+            --text-strong: #d0e3ff;
+            --accent-cyan: #00f3ff;
+            --accent-cyan-glow: rgba(0, 243, 255, 0.15);
+            --accent-purple: #b026ff;
+            --accent-red: #ff2a2a;
+            --alert-bg: rgba(40, 5, 5, 0.8);
+            --alert-text: #ffd6d6;
+            --card-bg: rgba(0, 30, 45, 0.6);
+            --qr-bg: rgba(15, 20, 35, 0.6);
+            --border-color: rgba(0, 243, 255, 0.3);
+            --shadow-color: rgba(0, 0, 0, 0.5);
+        }
+
+        body.light-mode {
+            /* Light Mode (Mas "Readable" nga Contrast) */
+            --page-bg: radial-gradient(circle at center, #e2e8f0 0%, #cbd5e1 100%);
+            --panel-bg: rgba(255, 255, 255, 0.95);
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --text-strong: #0f172a;
+            --accent-cyan: #0284c7; /* Darker blue para ma-basa sa puti */
+            --accent-cyan-glow: rgba(2, 132, 199, 0.15);
+            --accent-purple: #7e22ce;
+            --accent-red: #e11d48;
+            --alert-bg: #ffe4e6; /* Light pink background */
+            --alert-text: #881337; /* Dark red text para readable */
+            --card-bg: #f1f5f9;
+            --qr-bg: #f8fafc;
+            --border-color: rgba(2, 132, 199, 0.3);
+            --shadow-color: rgba(148, 163, 184, 0.3);
         }
         
+        /* Smooth Transition sa tanang elements pag mag change theme */
+        *, *::before, *::after {
+            transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
         body {
-            background: radial-gradient(circle at center, #1a1a24 0%, #000 100%);
-            color: #fff;
+            background: var(--page-bg);
+            color: var(--text-main);
             font-family: 'Rajdhani', sans-serif;
             margin: 0;
             padding: 20px;
@@ -24,31 +60,48 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .container {
             max-width: 450px;
             width: 100%;
             background: var(--panel-bg);
-            border: 1px solid rgba(0, 243, 255, 0.3);
+            border: 1px solid var(--border-color);
             border-radius: 15px;
             padding: 35px 25px;
-            box-shadow: 0 0 25px rgba(0, 243, 255, 0.15), inset 0 0 20px rgba(0, 243, 255, 0.05);
+            box-shadow: 0 0 25px var(--accent-cyan-glow), inset 0 0 20px rgba(0, 0, 0, 0.05);
             backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
             box-sizing: border-box;
+            
+            /* Floating Animation */
+            animation: float 6s ease-in-out infinite;
         }
 
-        /* Futuristic Scanline Effect */
-        .container::before {
-            content: "";
+        /* Toggle Button */
+        .theme-toggle {
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-            background-size: 100% 4px, 3px 100%;
-            pointer-events: none;
-            z-index: 10;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            z-index: 20;
+            background-color: var(--card-bg);
+            box-shadow: 0 0 10px var(--accent-cyan-glow);
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
         }
 
         h1, h2 {
@@ -59,15 +112,15 @@
 
         .brand {
             font-size: 2.2rem;
-            color: var(--neon-cyan);
-            text-shadow: 0 0 15px var(--neon-cyan);
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px var(--accent-cyan-glow);
             letter-spacing: 4px;
             text-transform: uppercase;
         }
 
         .sub-brand {
             font-size: 0.85rem;
-            color: #9bb1c2;
+            color: var(--text-muted);
             letter-spacing: 2px;
             margin-bottom: 25px;
             text-align: center;
@@ -77,81 +130,85 @@
 
         .title {
             font-size: 1.3rem;
-            color: #fff;
+            color: var(--text-main);
             letter-spacing: 3px;
             margin-bottom: 30px;
-            text-shadow: 0 0 8px rgba(255,255,255,0.6);
         }
 
         .card {
-            background: rgba(0, 30, 45, 0.6);
-            border-left: 4px solid var(--neon-cyan);
-            border-right: 1px solid rgba(0, 243, 255, 0.2);
-            border-top: 1px solid rgba(0, 243, 255, 0.2);
-            border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+            background: var(--card-bg);
+            border-left: 4px solid var(--accent-cyan);
+            border-right: 1px solid var(--border-color);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
             padding: 15px;
             margin-bottom: 20px;
             border-radius: 8px;
             display: flex;
             align-items: center;
             gap: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 5px 15px var(--shadow-color);
         }
 
         .date-box {
-            background: var(--neon-cyan);
-            color: #000;
+            background: var(--accent-cyan);
+            color: #fff;
             padding: 12px;
             border-radius: 10px;
             text-align: center;
             font-family: 'Orbitron', sans-serif;
             min-width: 65px;
-            box-shadow: 0 0 15px var(--neon-cyan);
+            box-shadow: 0 0 15px var(--accent-cyan-glow);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Pag light mode, dark text sa date-box para maklaro */
+        body.light-mode .date-box {
+            color: #ffffff; 
         }
 
         .date-box .day { font-size: 2rem; font-weight: 900; line-height: 1; }
         .date-box .month { font-size: 0.9rem; font-weight: 700; margin-top: 2px; }
         
-        .card-text { font-size: 1rem; line-height: 1.4; color: #d0e3ff; }
-        .card-text strong { color: var(--neon-cyan); }
+        .card-text { font-size: 1rem; line-height: 1.4; color: var(--text-strong); }
+        .card-text strong { color: var(--accent-cyan); }
         
         .alert {
-            background: rgba(40, 5, 5, 0.8);
-            border: 1px solid var(--neon-red);
-            border-left: 4px solid var(--neon-red);
+            background: var(--alert-bg);
+            border: 1px solid var(--accent-red);
+            border-left: 4px solid var(--accent-red);
             padding: 15px;
             border-radius: 8px;
             text-align: center;
             margin-bottom: 30px;
-            box-shadow: 0 0 15px rgba(255, 42, 42, 0.3);
-            animation: pulse 2s infinite;
+            box-shadow: 0 0 15px rgba(255, 42, 42, 0.15);
+            /* Pulsing Animation para mutawag atensyon */
+            animation: pulse-alert 2s infinite;
         }
 
         .alert h3 {
-            color: var(--neon-red);
+            color: var(--accent-red);
             margin: 0 0 8px 0;
             font-size: 1rem;
-            text-shadow: 0 0 8px var(--neon-red);
             letter-spacing: 1px;
         }
 
-        .alert p { margin: 0; font-size: 0.9rem; color: #ffd6d6; }
+        .alert p { margin: 0; font-size: 0.9rem; color: var(--alert-text); font-weight: 600; }
 
         .qr-section {
             text-align: center;
-            background: rgba(15, 20, 35, 0.6);
+            background: var(--qr-bg);
             padding: 25px;
             border-radius: 12px;
-            border: 1px solid rgba(176, 38, 255, 0.4);
-            box-shadow: 0 0 25px rgba(176, 38, 255, 0.15);
+            border: 1px solid rgba(176, 38, 255, 0.2);
+            box-shadow: 0 0 25px rgba(176, 38, 255, 0.1);
             margin-bottom: 25px;
             position: relative;
         }
 
         .qr-section h3 {
             font-family: 'Orbitron', sans-serif;
-            color: var(--neon-purple);
-            text-shadow: 0 0 10px var(--neon-purple);
+            color: var(--accent-purple);
             margin-top: 0;
             letter-spacing: 2px;
         }
@@ -162,7 +219,9 @@
             border-radius: 12px;
             display: inline-block;
             margin-bottom: 15px;
-            box-shadow: 0 0 20px rgba(255,255,255,0.4);
+            box-shadow: 0 0 20px var(--shadow-color);
+            position: relative;
+            overflow: hidden;
         }
 
         .qr-box img {
@@ -170,52 +229,96 @@
             height: 190px;
             display: block;
             border-radius: 5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Scanner Line Animation sa ibabaw sa QR */
+        .qr-box::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--accent-cyan);
+            box-shadow: 0 0 10px var(--accent-cyan);
+            z-index: 2;
+            animation: scan 3s linear infinite;
         }
 
         .account-details {
             font-size: 0.95rem;
-            color: #a4b8d1;
+            color: var(--text-muted);
             line-height: 1.6;
         }
 
         .account-details .name {
-            color: #fff;
+            color: var(--text-main);
             font-size: 1.2rem;
             font-weight: 600;
             letter-spacing: 2px;
             margin: 8px 0;
             font-family: 'Orbitron', sans-serif;
-            text-shadow: 0 0 5px rgba(255,255,255,0.5);
         }
         
         .footer {
             text-align: center;
             font-size: 0.85rem;
-            color: #6c849c;
-            border-top: 1px solid rgba(0, 243, 255, 0.2);
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
             padding-top: 20px;
             line-height: 1.6;
         }
 
         .footer em { 
-            color: var(--neon-cyan); 
+            color: var(--accent-cyan); 
             font-style: normal; 
             font-weight: 600;
             letter-spacing: 1px;
             display: inline-block;
             margin-top: 10px;
-            text-shadow: 0 0 5px rgba(0, 243, 255, 0.4);
         }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 10px rgba(255, 42, 42, 0.2); }
-            50% { box-shadow: 0 0 25px rgba(255, 42, 42, 0.6); }
-            100% { box-shadow: 0 0 10px rgba(255, 42, 42, 0.2); }
+        /* KEYFRAMES ANIMATIONS */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes pulse-alert {
+            0% { box-shadow: 0 0 5px rgba(255, 42, 42, 0.1); }
+            50% { box-shadow: 0 0 20px rgba(255, 42, 42, 0.4); }
+            100% { box-shadow: 0 0 5px rgba(255, 42, 42, 0.1); }
+        }
+
+        @keyframes scan {
+            0% { top: 0%; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        /* Entrance Animation */
+        .container {
+            animation: slideUpFade 1s cubic-bezier(0.16, 1, 0.3, 1) forwards, float 6s ease-in-out infinite 1s;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        @keyframes slideUpFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
+
     <div class="container">
+        <!-- Toggle Button -->
+        <button class="theme-toggle" id="themeBtn" title="Toggle Light/Dark Mode">🌙</button>
+
         <h1 class="brand">FLORES</h1>
         <div class="sub-brand">Network and Data Solution</div>
         <h2 class="title">PAYMENT REMINDER</h2>
@@ -239,7 +342,6 @@
         <div class="qr-section">
             <h3>SCAN TO PAY</h3>
             <div class="qr-box">
-                <!-- Dire na-update ang image source sa imong gi-request -->
                 <img src="gcash-qr.png" alt="GCash QR Code">
             </div>
             <div class="account-details">
@@ -247,7 +349,7 @@
                 <div class="name">GE****E F.</div>
                 Mobile No.: +63 995 832 ****<br>
                 User ID: *********4H91ON<br><br>
-                <strong style="color: var(--neon-cyan);">GCash • Scan to Pay</strong>
+                <strong style="color: var(--accent-cyan);">GCash • Scan to Pay</strong>
             </div>
         </div>
 
@@ -257,5 +359,22 @@
             <em>Reliable connections. Real solutions.</em>
         </div>
     </div>
+
+    <!-- JavaScript para sa Theme Toggle -->
+    <script>
+        const themeBtn = document.getElementById('themeBtn');
+        
+        // Pag click sa button, e-toggle ang class nga 'light-mode' sa body
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            
+            // Ilisan ang icon depende sa theme (Adlaw or Bulan)
+            if (document.body.classList.contains('light-mode')) {
+                themeBtn.textContent = '☀️';
+            } else {
+                themeBtn.textContent = '🌙';
+            }
+        });
+    </script>
 </body>
 </html>
