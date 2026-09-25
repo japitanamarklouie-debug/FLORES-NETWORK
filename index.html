@@ -20,15 +20,13 @@
     border-radius: 20px;
     max-width: 400px;
     width: 100%;
-    padding: 28px 22px;
+    padding: 28px 22px 32px;
     box-shadow: 0 0 40px rgba(0, 100, 200, 0.3);
     border: 1px solid rgba(212, 175, 55, 0.25);
-    position: relative;
-    overflow: hidden;
   }
   .logo {
     text-align: center;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
   }
   .logo h1 {
     font-size: 28px;
@@ -46,7 +44,7 @@
     font-size: 26px;
     font-weight: 800;
     color: #f0d78c;
-    margin: 10px 0 22px;
+    margin: 8px 0 20px;
     letter-spacing: 1px;
   }
   .due-box {
@@ -57,7 +55,7 @@
     display: flex;
     align-items: center;
     gap: 14px;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
   }
   .due-date {
     font-size: 42px;
@@ -66,7 +64,7 @@
     line-height: 1;
   }
   .due-month {
-    font-size: 16px;
+    font-size: 15px;
     color: #f0d78c;
     font-weight: 700;
   }
@@ -95,36 +93,39 @@
   .pay-title {
     text-align: center;
     color: #f0d78c;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     letter-spacing: 1px;
     margin-bottom: 14px;
   }
   .qr-card {
     background: #fff;
-    border-radius: 16px;
-    padding: 18px;
+    border-radius: 18px;
+    padding: 20px;
     text-align: center;
-    max-width: 260px;
+    max-width: 300px;
     margin: 0 auto;
   }
   .qr-card img {
-    width: 200px;
-    height: 200px;
+    width: 240px;          /* ← GI-PADAKO ANG QR */
+    height: 240px;
     display: block;
-    margin: 0 auto 10px;
+    margin: 0 auto 12px;
   }
   .qr-label {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
     color: #111;
   }
   .footer {
     text-align: center;
-    margin-top: 22px;
-    font-size: 11px;
-    color: #7a9bb8;
-    line-height: 1.5;
+    margin-top: 26px;
+    font-size: 14px;       /* ← GI-PADAKO ANG TEXT */
+    color: #a8c4d8;
+    line-height: 1.55;
+  }
+  .footer strong {
+    color: #d0e8ff;
   }
 </style>
 </head>
@@ -161,7 +162,7 @@
   </div>
 
   <div class="footer">
-    We appreciate your prompt payment and continued partnership.<br>
+    <strong>We appreciate your prompt payment and continued partnership.</strong><br>
     Thank you for being part of Flores Network and Data Solution.<br>
     <em>Reliable connections. Real solutions.</em>
   </div>
