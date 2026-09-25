@@ -6,9 +6,7 @@
     <title>Payment Reminder - Flores Network</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* CSS Variables para sa Themes */
         :root {
-            /* Dark Mode (Default) */
             --page-bg: radial-gradient(circle at center, #1a1a24 0%, #000 100%);
             --panel-bg: rgba(10, 15, 30, 0.85);
             --text-main: #ffffff;
@@ -27,25 +25,23 @@
         }
 
         body.light-mode {
-            /* Light Mode (Mas "Readable" nga Contrast) */
             --page-bg: radial-gradient(circle at center, #e2e8f0 0%, #cbd5e1 100%);
             --panel-bg: rgba(255, 255, 255, 0.95);
             --text-main: #1e293b;
             --text-muted: #64748b;
             --text-strong: #0f172a;
-            --accent-cyan: #0284c7; /* Darker blue para ma-basa sa puti */
+            --accent-cyan: #0284c7; 
             --accent-cyan-glow: rgba(2, 132, 199, 0.15);
             --accent-purple: #7e22ce;
             --accent-red: #e11d48;
-            --alert-bg: #ffe4e6; /* Light pink background */
-            --alert-text: #881337; /* Dark red text para readable */
+            --alert-bg: #ffe4e6; 
+            --alert-text: #881337; 
             --card-bg: #f1f5f9;
             --qr-bg: #f8fafc;
             --border-color: rgba(2, 132, 199, 0.3);
             --shadow-color: rgba(148, 163, 184, 0.3);
         }
         
-        /* Smooth Transition sa tanang elements pag mag change theme */
         *, *::before, *::after {
             transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
         }
@@ -75,12 +71,9 @@
             position: relative;
             overflow: hidden;
             box-sizing: border-box;
-            
-            /* Floating Animation */
             animation: float 6s ease-in-out infinite;
         }
 
-        /* Toggle Button */
         .theme-toggle {
             position: absolute;
             top: 20px;
@@ -162,7 +155,6 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
-        /* Pag light mode, dark text sa date-box para maklaro */
         body.light-mode .date-box {
             color: #ffffff; 
         }
@@ -182,7 +174,6 @@
             text-align: center;
             margin-bottom: 30px;
             box-shadow: 0 0 15px rgba(255, 42, 42, 0.15);
-            /* Pulsing Animation para mutawag atensyon */
             animation: pulse-alert 2s infinite;
         }
 
@@ -233,7 +224,6 @@
             z-index: 1;
         }
 
-        /* Scanner Line Animation sa ibabaw sa QR */
         .qr-box::after {
             content: "";
             position: absolute;
@@ -243,6 +233,38 @@
             box-shadow: 0 0 10px var(--accent-cyan);
             z-index: 2;
             animation: scan 3s linear infinite;
+        }
+
+        /* Bagong Download Button Styles */
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: var(--card-bg);
+            color: var(--accent-cyan);
+            border: 1px solid var(--accent-cyan);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px var(--accent-cyan-glow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+
+        .download-btn:hover {
+            background: var(--accent-cyan);
+            color: #000;
+            box-shadow: 0 0 20px var(--accent-cyan-glow);
+            transform: translateY(-2px);
+        }
+        
+        body.light-mode .download-btn:hover {
+            color: #fff;
         }
 
         .account-details {
@@ -278,7 +300,6 @@
             margin-top: 10px;
         }
 
-        /* KEYFRAMES ANIMATIONS */
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-8px); }
@@ -298,7 +319,6 @@
             100% { top: 100%; opacity: 0; }
         }
 
-        /* Entrance Animation */
         .container {
             animation: slideUpFade 1s cubic-bezier(0.16, 1, 0.3, 1) forwards, float 6s ease-in-out infinite 1s;
             opacity: 0;
@@ -316,7 +336,6 @@
 <body>
 
     <div class="container">
-        <!-- Toggle Button -->
         <button class="theme-toggle" id="themeBtn" title="Toggle Light/Dark Mode">🌙</button>
 
         <h1 class="brand">FLORES</h1>
@@ -344,6 +363,12 @@
             <div class="qr-box">
                 <img src="gcash-qr.png" alt="GCash QR Code">
             </div>
+            <br>
+            <!-- Bagong Download Button -->
+            <a href="gcash-qr.png" download="Flores_GCash_QR.png" class="download-btn">
+                📥 SAVE QR TO GALLERY
+            </a>
+
             <div class="account-details">
                 Transfer fees may apply.<br>
                 <div class="name">GE****E F.</div>
@@ -360,15 +385,12 @@
         </div>
     </div>
 
-    <!-- JavaScript para sa Theme Toggle -->
     <script>
         const themeBtn = document.getElementById('themeBtn');
         
-        // Pag click sa button, e-toggle ang class nga 'light-mode' sa body
         themeBtn.addEventListener('click', () => {
             document.body.classList.toggle('light-mode');
             
-            // Ilisan ang icon depende sa theme (Adlaw or Bulan)
             if (document.body.classList.contains('light-mode')) {
                 themeBtn.textContent = '☀️';
             } else {
