@@ -5,166 +5,160 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FLORES NETWORK - Payment Reminder</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-  * { margin:0; padding:0; box-sizing:border-box; font-family: 'Poppins', sans-serif; }
+  * { margin:0; padding:0; box-sizing:border-box; font-family: 'Inter', sans-serif; }
   
   body {
-    background: linear-gradient(165deg, #030b18 0%, #071428 40%, #0a1c33 100%);
+    background: #050505;
     color: #fff;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 18px;
+    padding: 16px;
   }
 
   .card {
-    background: linear-gradient(180deg, rgba(12,28,52,0.95) 0%, rgba(7,18,36,0.98) 100%);
-    border-radius: 24px;
+    background: #0a0a0a;
+    border-radius: 28px;
     max-width: 400px;
     width: 100%;
-    padding: 32px 24px 36px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(212,175,55,0.15);
+    padding: 36px 26px 40px;
+    border: 1px solid #1a1a1a;
+    box-shadow: 0 0 60px rgba(0, 220, 255, 0.08);
     position: relative;
-    overflow: hidden;
-  }
-
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, #d4af37, #f0d78c, #d4af37, transparent);
   }
 
   .logo {
     text-align: center;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
   .logo h1 {
-    font-size: 30px;
-    letter-spacing: 4px;
-    color: #f0d78c;
+    font-size: 32px;
     font-weight: 800;
-    text-shadow: 0 0 20px rgba(240,215,140,0.3);
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, #00e5ff, #00aaff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   .logo small {
-    color: #8ba8c4;
+    color: #666;
     font-size: 11px;
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
     font-weight: 500;
   }
 
   .title {
     text-align: center;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
-    color: #f0d78c;
-    margin: 18px 0 24px;
-    letter-spacing: 2px;
+    color: #00e5ff;
+    margin: 20px 0 28px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
   }
 
   .due-box {
-    background: linear-gradient(135deg, rgba(0,90,160,0.25), rgba(0,60,120,0.15));
-    border: 1px solid rgba(100,180,255,0.25);
-    border-radius: 16px;
-    padding: 18px;
+    background: #111;
+    border: 1px solid #1f1f1f;
+    border-radius: 18px;
+    padding: 20px;
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 18px;
     margin-bottom: 16px;
   }
   .due-left {
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    border-radius: 14px;
+    padding: 12px 16px;
     text-align: center;
-    min-width: 70px;
+    min-width: 80px;
   }
   .due-day {
-    font-size: 42px;
+    font-size: 36px;
     font-weight: 800;
-    color: #4fc3f7;
+    color: #fff;
     line-height: 1;
   }
   .due-month {
-    font-size: 13px;
-    color: #f0d78c;
+    font-size: 12px;
+    color: rgba(255,255,255,0.85);
     font-weight: 600;
     letter-spacing: 1px;
   }
   .due-text {
-    font-size: 13px;
-    color: #c5d8e8;
+    font-size: 13.5px;
+    color: #ccc;
     line-height: 1.5;
   }
   .due-text strong {
-    color: #ffffff;
+    color: #00e5ff;
   }
 
   .warning {
-    background: linear-gradient(135deg, rgba(160,20,20,0.25), rgba(120,10,10,0.2));
-    border: 1px solid rgba(255,80,80,0.4);
-    border-radius: 14px;
-    padding: 14px 16px;
-    margin-bottom: 26px;
+    background: #1a0a0a;
+    border: 1px solid #ff3333;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 28px;
     text-align: center;
   }
   .warning h3 {
-    color: #ff6b6b;
+    color: #ff4444;
     font-size: 13px;
     font-weight: 700;
     margin-bottom: 4px;
     letter-spacing: 0.5px;
   }
   .warning p {
-    font-size: 12px;
-    color: #ffbdbd;
+    font-size: 12.5px;
+    color: #ff9999;
   }
 
   .pay-title {
     text-align: center;
-    color: #f0d78c;
-    font-size: 14px;
+    color: #00e5ff;
+    font-size: 13px;
     font-weight: 600;
-    letter-spacing: 2px;
-    margin-bottom: 16px;
+    letter-spacing: 3px;
+    margin-bottom: 18px;
+    text-transform: uppercase;
   }
 
   .qr-card {
-    background: #ffffff;
-    border-radius: 20px;
-    padding: 22px 20px 18px;
+    background: #fff;
+    border-radius: 22px;
+    padding: 24px 20px 20px;
     text-align: center;
     max-width: 280px;
     margin: 0 auto;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    box-shadow: 0 15px 40px rgba(0, 220, 255, 0.15);
   }
   .qr-card img {
     width: 220px;
     height: 220px;
     display: block;
-    margin: 0 auto 12px;
-    border-radius: 8px;
+    margin: 0 auto 14px;
   }
   .qr-label {
     font-size: 15px;
     font-weight: 700;
-    color: #1a1a1a;
+    color: #111;
   }
 
   .footer {
     text-align: center;
-    margin-top: 28px;
+    margin-top: 32px;
     font-size: 13.5px;
-    color: #9eb6cc;
-    line-height: 1.65;
+    color: #888;
+    line-height: 1.7;
   }
   .footer .main {
-    color: #d0e4f5;
+    color: #ddd;
     font-weight: 500;
-  }
-  .footer em {
-    color: #7a9bb8;
-    font-style: italic;
+    margin-bottom: 4px;
   }
 </style>
 </head>
@@ -175,7 +169,7 @@
       <small>NETWORK AND DATA SOLUTION</small>
     </div>
 
-    <div class="title">PAYMENT REMINDER</div>
+    <div class="title">Payment Reminder</div>
 
     <div class="due-box">
       <div class="due-left">
@@ -184,7 +178,7 @@
       </div>
       <div class="due-text">
         Your payment is due every <strong>29th</strong> of the month.<br>
-        Kindly settle on or before the <strong>3rd</strong> of the following month to avoid service interruption.
+        Kindly settle on or before the <strong>3rd</strong> of the following month.
       </div>
     </div>
 
@@ -193,17 +187,17 @@
       <p>Payments after the cut-off will be processed on the next billing cycle.</p>
     </div>
 
-    <div class="pay-title">SCAN TO PAY</div>
+    <div class="pay-title">Scan to Pay</div>
 
     <div class="qr-card">
-      <img src="gcash-qr.png" alt="GCash QR Code">
+      <img src="gcash-qr.png" alt="GCash QR">
       <div class="qr-label">GCash • Scan to Pay</div>
     </div>
 
     <div class="footer">
       <div class="main">We appreciate your prompt payment and continued partnership.</div>
       Thank you for being part of Flores Network and Data Solution.<br>
-      <em>Reliable connections. Real solutions.</em>
+      <span style="color:#555; font-style:italic;">Reliable connections. Real solutions.</span>
     </div>
   </div>
 
