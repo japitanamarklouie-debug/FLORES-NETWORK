@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLORES NETWORK - Payment Reminder</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, Helvetica, sans-serif; }
+  body {
+    background: linear-gradient(160deg, #050d1a, #0a1a2f 50%, #071428);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+  }
+  .card {
+    background: linear-gradient(180deg, #0b1c33 0%, #071428 100%);
+    border-radius: 20px;
+    max-width: 400px;
+    width: 100%;
+    padding: 28px 22px;
+    box-shadow: 0 0 40px rgba(0, 100, 200, 0.3);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    position: relative;
+    overflow: hidden;
+  }
+  .logo {
+    text-align: center;
+    margin-bottom: 18px;
+  }
+  .logo h1 {
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: #f0d78c;
+    font-weight: 800;
+  }
+  .logo small {
+    color: #a8c4d8;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+  .title {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 800;
+    color: #f0d78c;
+    margin: 10px 0 22px;
+    letter-spacing: 1px;
+  }
+  .due-box {
+    background: rgba(0, 60, 120, 0.35);
+    border: 1px solid rgba(100, 180, 255, 0.3);
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .due-date {
+    font-size: 42px;
+    font-weight: 900;
+    color: #4fc3f7;
+    line-height: 1;
+  }
+  .due-month {
+    font-size: 16px;
+    color: #f0d78c;
+    font-weight: 700;
+  }
+  .due-text {
+    font-size: 13px;
+    color: #c8dce8;
+    line-height: 1.4;
+  }
+  .warning {
+    background: rgba(160, 20, 20, 0.3);
+    border: 1px solid #ff4444;
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 22px;
+    text-align: center;
+  }
+  .warning h3 {
+    color: #ff6b6b;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  .warning p {
+    font-size: 12px;
+    color: #ffcccc;
+  }
+  .pay-title {
+    text-align: center;
+    color: #f0d78c;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+  }
+  .qr-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 18px;
+    text-align: center;
+    max-width: 260px;
+    margin: 0 auto;
+  }
+  .qr-card img {
+    width: 200px;
+    height: 200px;
+    display: block;
+    margin: 0 auto 10px;
+  }
+  .qr-label {
+    font-size: 15px;
+    font-weight: 700;
+    color: #111;
+  }
+  .footer {
+    text-align: center;
+    margin-top: 22px;
+    font-size: 11px;
+    color: #7a9bb8;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">
+    <h1>FLORES</h1>
+    <small>NETWORK AND DATA SOLUTION</small>
+  </div>
+
+  <div class="title">PAYMENT REMINDER</div>
+
+  <div class="due-box">
+    <div>
+      <div class="due-date" id="dueDay">29</div>
+      <div class="due-month" id="dueMonth">SEP</div>
+    </div>
+    <div class="due-text">
+      Your payment is due every <strong>29th</strong> of the month.<br>
+      Kindly settle on or before the <strong>3rd</strong> of the following month to avoid service interruption.
+    </div>
+  </div>
+
+  <div class="warning">
+    <h3>⚠ CUT-OFF: 3RD OF THE FOLLOWING MONTH</h3>
+    <p>Payments after the cut-off will be processed on the next billing cycle.</p>
+  </div>
+
+  <div class="pay-title">SCAN TO PAY</div>
+
+  <div class="qr-card">
+    <img src="gcash-qr.png" alt="GCash QR">
+    <div class="qr-label">GCash • Scan to Pay</div>
+  </div>
+
+  <div class="footer">
+    We appreciate your prompt payment and continued partnership.<br>
+    Thank you for being part of Flores Network and Data Solution.<br>
+    <em>Reliable connections. Real solutions.</em>
+  </div>
+</div>
+
+<script>
+  function updateDueDate() {
+    const now = new Date();
+    let year = now.getFullYear();
+    let month = now.getMonth();
+    let day = now.getDate();
+
+    if (day > 29) {
+      month += 1;
+      if (month > 11) {
+        month = 0;
+        year += 1;
+      }
+    }
+
+    const monthNames = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+    document.getElementById("dueMonth").textContent = monthNames[month];
+    document.getElementById("dueDay").textContent = "29";
+  }
+  updateDueDate();
+</script>
+</body>
+</html>
