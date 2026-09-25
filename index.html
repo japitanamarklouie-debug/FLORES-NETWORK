@@ -5,182 +5,217 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FLORES NETWORK - Payment Reminder</title>
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, Helvetica, sans-serif; }
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+  * { margin:0; padding:0; box-sizing:border-box; font-family: 'Poppins', sans-serif; }
+  
   body {
-    background: linear-gradient(160deg, #050d1a, #0a1a2f 50%, #071428);
+    background: linear-gradient(165deg, #030b18 0%, #071428 40%, #0a1c33 100%);
     color: #fff;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 16px;
+    padding: 18px;
   }
+
   .card {
-    background: linear-gradient(180deg, #0b1c33 0%, #071428 100%);
-    border-radius: 20px;
+    background: linear-gradient(180deg, rgba(12,28,52,0.95) 0%, rgba(7,18,36,0.98) 100%);
+    border-radius: 24px;
     max-width: 400px;
     width: 100%;
-    padding: 28px 22px 32px;
-    box-shadow: 0 0 40px rgba(0, 100, 200, 0.3);
-    border: 1px solid rgba(212, 175, 55, 0.25);
+    padding: 32px 24px 36px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(212,175,55,0.15);
+    position: relative;
+    overflow: hidden;
   }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #d4af37, #f0d78c, #d4af37, transparent);
+  }
+
   .logo {
     text-align: center;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
   }
   .logo h1 {
-    font-size: 28px;
-    letter-spacing: 3px;
+    font-size: 30px;
+    letter-spacing: 4px;
     color: #f0d78c;
     font-weight: 800;
+    text-shadow: 0 0 20px rgba(240,215,140,0.3);
   }
   .logo small {
-    color: #a8c4d8;
+    color: #8ba8c4;
     font-size: 11px;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
+    font-weight: 500;
   }
+
   .title {
     text-align: center;
-    font-size: 26px;
-    font-weight: 800;
+    font-size: 22px;
+    font-weight: 700;
     color: #f0d78c;
-    margin: 8px 0 20px;
-    letter-spacing: 1px;
+    margin: 18px 0 24px;
+    letter-spacing: 2px;
   }
+
   .due-box {
-    background: rgba(0, 60, 120, 0.35);
-    border: 1px solid rgba(100, 180, 255, 0.3);
-    border-radius: 14px;
-    padding: 16px;
+    background: linear-gradient(135deg, rgba(0,90,160,0.25), rgba(0,60,120,0.15));
+    border: 1px solid rgba(100,180,255,0.25);
+    border-radius: 16px;
+    padding: 18px;
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 16px;
     margin-bottom: 16px;
   }
-  .due-date {
+  .due-left {
+    text-align: center;
+    min-width: 70px;
+  }
+  .due-day {
     font-size: 42px;
-    font-weight: 900;
+    font-weight: 800;
     color: #4fc3f7;
     line-height: 1;
   }
   .due-month {
-    font-size: 15px;
+    font-size: 13px;
     color: #f0d78c;
-    font-weight: 700;
+    font-weight: 600;
+    letter-spacing: 1px;
   }
   .due-text {
     font-size: 13px;
-    color: #c8dce8;
-    line-height: 1.4;
+    color: #c5d8e8;
+    line-height: 1.5;
   }
+  .due-text strong {
+    color: #ffffff;
+  }
+
   .warning {
-    background: rgba(160, 20, 20, 0.3);
-    border: 1px solid #ff4444;
-    border-radius: 12px;
-    padding: 14px;
-    margin-bottom: 22px;
+    background: linear-gradient(135deg, rgba(160,20,20,0.25), rgba(120,10,10,0.2));
+    border: 1px solid rgba(255,80,80,0.4);
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 26px;
     text-align: center;
   }
   .warning h3 {
     color: #ff6b6b;
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 700;
     margin-bottom: 4px;
+    letter-spacing: 0.5px;
   }
   .warning p {
     font-size: 12px;
-    color: #ffcccc;
+    color: #ffbdbd;
   }
+
   .pay-title {
     text-align: center;
     color: #f0d78c;
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    margin-bottom: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
   }
+
   .qr-card {
-    background: #fff;
-    border-radius: 18px;
-    padding: 20px;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 22px 20px 18px;
     text-align: center;
-    max-width: 300px;
+    max-width: 280px;
     margin: 0 auto;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
   }
   .qr-card img {
-    width: 240px;          /* ← GI-PADAKO ANG QR */
-    height: 240px;
+    width: 220px;
+    height: 220px;
     display: block;
     margin: 0 auto 12px;
+    border-radius: 8px;
   }
   .qr-label {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
-    color: #111;
+    color: #1a1a1a;
   }
+
   .footer {
     text-align: center;
-    margin-top: 26px;
-    font-size: 14px;       /* ← GI-PADAKO ANG TEXT */
-    color: #a8c4d8;
-    line-height: 1.55;
+    margin-top: 28px;
+    font-size: 13.5px;
+    color: #9eb6cc;
+    line-height: 1.65;
   }
-  .footer strong {
-    color: #d0e8ff;
+  .footer .main {
+    color: #d0e4f5;
+    font-weight: 500;
+  }
+  .footer em {
+    color: #7a9bb8;
+    font-style: italic;
   }
 </style>
 </head>
 <body>
-<div class="card">
-  <div class="logo">
-    <h1>FLORES</h1>
-    <small>NETWORK AND DATA SOLUTION</small>
-  </div>
-
-  <div class="title">PAYMENT REMINDER</div>
-
-  <div class="due-box">
-    <div>
-      <div class="due-date" id="dueDay">29</div>
-      <div class="due-month" id="dueMonth">SEP</div>
+  <div class="card">
+    <div class="logo">
+      <h1>FLORES</h1>
+      <small>NETWORK AND DATA SOLUTION</small>
     </div>
-    <div class="due-text">
-      Your payment is due every <strong>29th</strong> of the month.<br>
-      Kindly settle on or before the <strong>3rd</strong> of the following month to avoid service interruption.
+
+    <div class="title">PAYMENT REMINDER</div>
+
+    <div class="due-box">
+      <div class="due-left">
+        <div class="due-day" id="dueDay">29</div>
+        <div class="due-month" id="dueMonth">SEP</div>
+      </div>
+      <div class="due-text">
+        Your payment is due every <strong>29th</strong> of the month.<br>
+        Kindly settle on or before the <strong>3rd</strong> of the following month to avoid service interruption.
+      </div>
+    </div>
+
+    <div class="warning">
+      <h3>⚠ CUT-OFF: 3RD OF THE FOLLOWING MONTH</h3>
+      <p>Payments after the cut-off will be processed on the next billing cycle.</p>
+    </div>
+
+    <div class="pay-title">SCAN TO PAY</div>
+
+    <div class="qr-card">
+      <img src="gcash-qr.png" alt="GCash QR Code">
+      <div class="qr-label">GCash • Scan to Pay</div>
+    </div>
+
+    <div class="footer">
+      <div class="main">We appreciate your prompt payment and continued partnership.</div>
+      Thank you for being part of Flores Network and Data Solution.<br>
+      <em>Reliable connections. Real solutions.</em>
     </div>
   </div>
-
-  <div class="warning">
-    <h3>⚠ CUT-OFF: 3RD OF THE FOLLOWING MONTH</h3>
-    <p>Payments after the cut-off will be processed on the next billing cycle.</p>
-  </div>
-
-  <div class="pay-title">SCAN TO PAY</div>
-
-  <div class="qr-card">
-    <img src="gcash-qr.png" alt="GCash QR">
-    <div class="qr-label">GCash • Scan to Pay</div>
-  </div>
-
-  <div class="footer">
-    <strong>We appreciate your prompt payment and continued partnership.</strong><br>
-    Thank you for being part of Flores Network and Data Solution.<br>
-    <em>Reliable connections. Real solutions.</em>
-  </div>
-</div>
 
 <script>
   function updateDueDate() {
     const now = new Date();
-    let year = now.getFullYear();
     let month = now.getMonth();
     let day = now.getDate();
 
     if (day > 29) {
       month += 1;
-      if (month > 11) {
-        month = 0;
-        year += 1;
-      }
+      if (month > 11) month = 0;
     }
 
     const monthNames = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
