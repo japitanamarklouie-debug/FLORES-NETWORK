@@ -1,11 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLORES NETWORK - Payment Reminder</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  :root {
+    --bg: #050505;
+    --card-bg: #0a0a0a;
+    --text: #ffffff;
+    --text-secondary: #888;
+    --accent: #00e5ff;
+    --border: #1a1a1a;
+    --due-bg: #111;
+    --warning-bg: #1a0a0a;
+    --qr-bg: linear-gradient(145deg, #111 0%, #0a0a0a 100%);
+    --qr-border: #222;
+  }
+
+  body.light {
+    --bg: #f0f4f8;
+    --card-bg: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #555;
+    --accent: #0077cc;
+    --border: #e0e0e0;
+    --due-bg: #f5f9fc;
+    --warning-bg: #fff5f5;
+    --qr-bg: #f8f9fa;
+    --qr-border: #ddd;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; font-family: 'Inter', sans-serif; }
+  
+  body {
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    transition: background 0.4s ease, color 0.4s ease;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border-radius: 28px;
+    max-width: 400px;
+    width: 100%;
+    padding: 36px 26px 40px;
+    border: 1px solid var(--border);
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.1);
+    position: relative;
+    animation: cardEntrance 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
+  }
+
+  @keyframes cardEntrance {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .theme-toggle {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: var(--due-bg);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    z-index: 10;
+  }
+
+  .theme-toggle:hover {
+    transform: scale(1.1);
+    border-color: var(--accent);
+  }
+
+  .logo {
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  .logo h1 {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: var(--accent);
+  }
+  .logo small {
+    color: var(--text-secondary);
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 500;
+  }
+
+  .title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 20px 0 28px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .due-box {
+    background: var(--due-bg);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 16px;
+  }
+  .due-left {
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    border-radius: 14px;
+    padding: 12px 16px;
+    text-align: center;
+    min-width: 80px;
+  }
+  .due-day {
+    font-size: 36px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+  }
+  .due-month {
+    font-size: 12px;
+    color: rgba(255,255,255,0.85);
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+  .due-text {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .due-text strong {
+    color: var(--accent);
+  }
+
+  .warning {
+    background: var(--warning-bg);
+    border: 1px solid #ff3333;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 28px;
+    text-align: center;
+  }
+  .warning h3 {
+    color: #ff4444;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .warning p {
+    font-size: 12.5px;
+    color: #ff6666;
+  }
+
+  .pay-title {
+    text-align: center;
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+
+  .qr-card {
+    background: var(--qr-bg);
+    border: 1px solid var(--qr-border);
+    border-radius: 24px;
+    padding: 20px;
+    text-align: center;
+    max-width: 280px;
+    margin: 0 auto;
+    transition: all 0.35s ease;
+  }
+
+  .qr-card:hover {
+    border-color: var(--accent);
+    transform: scale(1.03);
+  }
+
+  .qr-inner {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 16px;
+    display: inline-block;
+  }
+
+  .qr-card img {
+    width: 210px;
+    height: 210px;
+    display: block;
+    border-radius: 8px;
+  }
+
+  .qr-label {
+    margin-top: 14px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 32px;
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .footer .main {
+    color: var(--text);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  @media (max-width: 480px) {
+    body { padding: 12px; }
+    .card { padding: 28px 18px 32px; border-radius: 22px; }
+    .logo h1 { font-size: 28px; }
+    .title { font-size: 17px; margin: 16px 0 22px; }
+    .due-box { padding: 16px; gap: 14px; }
+    .due-day { font-size: 32px; }
+    .qr-card img { width: 190px; height: 190px; }
+    .theme-toggle { top: 14px; right: 14px; width: 38px; height: 38px; font-size: 16px; }
+  }
+
+  @media (max-width: 360px) {
+    .due-box { flex-direction: column; text-align: center; gap: 12px; }
+    .due-left { margin: 0 auto; }
+    .qr-card img { width: 170px; height: 170px; }
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="theme-toggle" id="themeToggle" title="Toggle Dark/Light Mode">🌙</div>
+
+    <div class="logo">
+      <h1>FLORES</h1>
+      <small>NETWORK AND DATA SOLUTION</small>
+    </div>
+
+    <div class="title">Payment Reminder</div>
+
+    <div class="due-box">
+      <div class="due-left">
+        <div class="due-day" id="dueDay">29</div>
+        <div class="due-month" id="dueMonth">SEP</div>
+      </div>
+      <div class="due-text">
+        Your payment is due every <strong>29th</strong> of the month.<br>
+        Kindly settle on or before the <strong>3rd</strong> of the following month.
+      </div>
+    </div>
+
+    <div class="warning">
+      <h3>⚠ CUT-OFF: 3RD OF THE FOLLOWING MONTH</h3>
+      <p>Payments after the cut-off will be processed on the next billing cycle.</p>
+    </div>
+
+    <div class="pay-title">Scan to Pay</div>
+
+    <div class="qr-card">
+      <div class="qr-inner">
+        <img src="gcash-qr.png" alt="GCash QR">
+      </div>
+      <div class="qr-label">GCash • Scan to Pay</div>
+    </div>
+
+    <div class="footer">
+      <div class="main">We appreciate your prompt payment and continued partnership.</div>
+      Thank you for being part of Flores Network and Data Solution.<br>
+      <span style="font-style:italic; opacity:0.7;">Reliable connections. Real solutions.</span>
+    </div>
+  </div>
+
 <script>
-  // ======================
-  // DARK / LIGHT MODE TOGGLE + SYSTEM PREFERENCE
-  // ======================
   const themeToggle = document.getElementById('themeToggle');
   const body = document.body;
 
-  // Function to apply theme
   function applyTheme(theme) {
     if (theme === 'light') {
       body.classList.add('light');
@@ -16,38 +312,28 @@
     }
   }
 
-  // 1. Check localStorage first
   const savedTheme = localStorage.getItem('theme');
 
   if (savedTheme) {
-    // User already chose before
     applyTheme(savedTheme);
   } else {
-    // No saved preference → follow system setting
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     applyTheme(prefersDark ? 'dark' : 'light');
   }
 
-  // 2. Toggle when button is clicked
   themeToggle.addEventListener('click', () => {
     const isLight = body.classList.toggle('light');
     const newTheme = isLight ? 'light' : 'dark';
-
     themeToggle.textContent = isLight ? '☀️' : '🌙';
     localStorage.setItem('theme', newTheme);
   });
 
-  // 3. Optional: Listen if user changes system theme while page is open
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    // Only auto-change if user has never manually chosen a theme
     if (!localStorage.getItem('theme')) {
       applyTheme(e.matches ? 'dark' : 'light');
     }
   });
 
-  // ======================
-  // DUE DATE
-  // ======================
   function updateDueDate() {
     const now = new Date();
     let month = now.getMonth();
@@ -64,3 +350,5 @@
   }
   updateDueDate();
 </script>
+</body>
+</html>
