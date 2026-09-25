@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FLORES NETWORK - Payment Reminder</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
+  * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, Helvetica, sans-serif; }
+  
   :root {
     --bg: #050505;
     --card-bg: #0a0a0a;
@@ -16,8 +16,6 @@
     --border: #1a1a1a;
     --due-bg: #111;
     --warning-bg: #1a0a0a;
-    --qr-bg: linear-gradient(145deg, #111 0%, #0a0a0a 100%);
-    --qr-border: #222;
   }
 
   body.light {
@@ -29,12 +27,8 @@
     --border: #e0e0e0;
     --due-bg: #f5f9fc;
     --warning-bg: #fff5f5;
-    --qr-bg: #f8f9fa;
-    --qr-border: #ddd;
   }
 
-  * { margin:0; padding:0; box-sizing:border-box; font-family: 'Inter', sans-serif; }
-  
   body {
     background: var(--bg);
     color: var(--text);
@@ -43,62 +37,42 @@
     justify-content: center;
     align-items: center;
     padding: 16px;
-    transition: background 0.4s ease, color 0.4s ease;
+    transition: background 0.3s ease;
   }
 
   .card {
     background: var(--card-bg);
-    border-radius: 28px;
+    border-radius: 24px;
     max-width: 400px;
     width: 100%;
-    padding: 36px 26px 40px;
+    padding: 32px 24px 36px;
     border: 1px solid var(--border);
-    box-shadow: 0 0 60px rgba(0, 0, 0, 0.1);
     position: relative;
-    animation: cardEntrance 0.8s ease-out forwards;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  }
-
-  .card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
-  }
-
-  @keyframes cardEntrance {
-    to { opacity: 1; transform: translateY(0); }
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
   }
 
   .theme-toggle {
     position: absolute;
-    top: 18px;
-    right: 18px;
+    top: 16px;
+    right: 16px;
     background: var(--due-bg);
     border: 1px solid var(--border);
-    border-radius: 50px;
-    width: 42px;
-    height: 42px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     font-size: 18px;
-    transition: all 0.3s ease;
-    z-index: 10;
-  }
-
-  .theme-toggle:hover {
-    transform: scale(1.1);
-    border-color: var(--accent);
   }
 
   .logo {
     text-align: center;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
   .logo h1 {
-    font-size: 32px;
+    font-size: 30px;
     font-weight: 800;
     letter-spacing: 3px;
     color: var(--accent);
@@ -106,53 +80,51 @@
   .logo small {
     color: var(--text-secondary);
     font-size: 11px;
-    letter-spacing: 2px;
-    font-weight: 500;
+    letter-spacing: 1.5px;
   }
 
   .title {
     text-align: center;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     color: var(--accent);
-    margin: 20px 0 28px;
-    letter-spacing: 3px;
+    margin: 18px 0 24px;
+    letter-spacing: 2px;
     text-transform: uppercase;
   }
 
   .due-box {
     background: var(--due-bg);
     border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 20px;
+    border-radius: 16px;
+    padding: 18px;
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 16px;
     margin-bottom: 16px;
   }
   .due-left {
     background: linear-gradient(135deg, #00c6ff, #0072ff);
-    border-radius: 14px;
-    padding: 12px 16px;
+    border-radius: 12px;
+    padding: 10px 14px;
     text-align: center;
-    min-width: 80px;
+    min-width: 75px;
   }
   .due-day {
-    font-size: 36px;
+    font-size: 34px;
     font-weight: 800;
     color: #fff;
     line-height: 1;
   }
   .due-month {
     font-size: 12px;
-    color: rgba(255,255,255,0.85);
+    color: rgba(255,255,255,0.9);
     font-weight: 600;
-    letter-spacing: 1px;
   }
   .due-text {
-    font-size: 13.5px;
+    font-size: 13px;
     color: var(--text-secondary);
-    line-height: 1.5;
+    line-height: 1.45;
   }
   .due-text strong {
     color: var(--accent);
@@ -160,10 +132,10 @@
 
   .warning {
     background: var(--warning-bg);
-    border: 1px solid #ff3333;
-    border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 28px;
+    border: 1px solid #ff4444;
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 24px;
     text-align: center;
   }
   .warning h3 {
@@ -173,8 +145,8 @@
     margin-bottom: 4px;
   }
   .warning p {
-    font-size: 12.5px;
-    color: #ff6666;
+    font-size: 12px;
+    color: #ff7777;
   }
 
   .pay-title {
@@ -182,43 +154,36 @@
     color: var(--accent);
     font-size: 13px;
     font-weight: 600;
-    letter-spacing: 3px;
-    margin-bottom: 18px;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
     text-transform: uppercase;
   }
 
   .qr-card {
-    background: var(--qr-bg);
-    border: 1px solid var(--qr-border);
-    border-radius: 24px;
-    padding: 20px;
+    background: var(--due-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 18px;
     text-align: center;
-    max-width: 280px;
+    max-width: 270px;
     margin: 0 auto;
-    transition: all 0.35s ease;
-  }
-
-  .qr-card:hover {
-    border-color: var(--accent);
-    transform: scale(1.03);
   }
 
   .qr-inner {
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 16px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 14px;
     display: inline-block;
   }
 
   .qr-card img {
-    width: 210px;
-    height: 210px;
+    width: 200px;
+    height: 200px;
     display: block;
-    border-radius: 8px;
   }
 
   .qr-label {
-    margin-top: 14px;
+    margin-top: 12px;
     font-size: 14px;
     font-weight: 700;
     color: var(--accent);
@@ -226,10 +191,10 @@
 
   .footer {
     text-align: center;
-    margin-top: 32px;
-    font-size: 13.5px;
+    margin-top: 28px;
+    font-size: 13px;
     color: var(--text-secondary);
-    line-height: 1.7;
+    line-height: 1.6;
   }
   .footer .main {
     color: var(--text);
@@ -239,25 +204,16 @@
 
   @media (max-width: 480px) {
     body { padding: 12px; }
-    .card { padding: 28px 18px 32px; border-radius: 22px; }
-    .logo h1 { font-size: 28px; }
-    .title { font-size: 17px; margin: 16px 0 22px; }
-    .due-box { padding: 16px; gap: 14px; }
-    .due-day { font-size: 32px; }
-    .qr-card img { width: 190px; height: 190px; }
-    .theme-toggle { top: 14px; right: 14px; width: 38px; height: 38px; font-size: 16px; }
-  }
-
-  @media (max-width: 360px) {
-    .due-box { flex-direction: column; text-align: center; gap: 12px; }
-    .due-left { margin: 0 auto; }
-    .qr-card img { width: 170px; height: 170px; }
+    .card { padding: 26px 16px 30px; }
+    .logo h1 { font-size: 26px; }
+    .title { font-size: 16px; }
+    .qr-card img { width: 180px; height: 180px; }
   }
 </style>
 </head>
 <body>
   <div class="card">
-    <div class="theme-toggle" id="themeToggle" title="Toggle Dark/Light Mode">🌙</div>
+    <div class="theme-toggle" id="themeToggle">🌙</div>
 
     <div class="logo">
       <h1>FLORES</h1>
@@ -313,7 +269,6 @@
   }
 
   const savedTheme = localStorage.getItem('theme');
-
   if (savedTheme) {
     applyTheme(savedTheme);
   } else {
@@ -323,27 +278,18 @@
 
   themeToggle.addEventListener('click', () => {
     const isLight = body.classList.toggle('light');
-    const newTheme = isLight ? 'light' : 'dark';
     themeToggle.textContent = isLight ? '☀️' : '🌙';
-    localStorage.setItem('theme', newTheme);
-  });
-
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    if (!localStorage.getItem('theme')) {
-      applyTheme(e.matches ? 'dark' : 'light');
-    }
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
   });
 
   function updateDueDate() {
     const now = new Date();
     let month = now.getMonth();
     let day = now.getDate();
-
     if (day > 29) {
       month += 1;
       if (month > 11) month = 0;
     }
-
     const monthNames = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
     document.getElementById("dueMonth").textContent = monthNames[month];
     document.getElementById("dueDay").textContent = "29";
