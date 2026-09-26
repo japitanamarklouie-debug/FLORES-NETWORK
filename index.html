@@ -211,31 +211,37 @@
             display: inline-block;
             margin-bottom: 15px;
             box-shadow: 0 0 20px var(--shadow-color);
-            position: relative;
-            overflow: hidden;
         }
 
-        .qr-box img {
-            width: 190px;
-            height: 190px;
+        /* Gidugang nga wrapper para dili mulapas ang linya sa padding */
+        .qr-image-wrapper {
+            position: relative;
             display: block;
             border-radius: 5px;
-            position: relative;
-            z-index: 1;
+            overflow: hidden;
+            width: 190px;
+            height: 190px;
         }
 
-        .qr-box::after {
-            content: "";
+        .qr-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Ang Scanner Line nga mubagay sa imong Theme Variables */
+        .scanner-line {
             position: absolute;
-            top: 0; left: 0; right: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 3px;
             background: var(--accent-cyan);
-            box-shadow: 0 0 10px var(--accent-cyan);
+            box-shadow: 0 0 15px var(--accent-cyan), 0 0 30px var(--accent-cyan);
             z-index: 2;
-            animation: scan 3s linear infinite;
+            animation: scan 2.5s linear infinite;
         }
 
-        /* Bagong Download Button Styles */
         .download-btn {
             display: inline-flex;
             align-items: center;
@@ -312,11 +318,12 @@
             100% { box-shadow: 0 0 5px rgba(255, 42, 42, 0.1); }
         }
 
+        /* Gi-update nga Animation Keyframes para sa Scanner */
         @keyframes scan {
-            0% { top: 0%; opacity: 0; }
+            0% { top: -5%; opacity: 0; }
             10% { opacity: 1; }
             90% { opacity: 1; }
-            100% { top: 100%; opacity: 0; }
+            100% { top: 105%; opacity: 0; }
         }
 
         .container {
@@ -361,10 +368,13 @@
         <div class="qr-section">
             <h3>SCAN TO PAY</h3>
             <div class="qr-box">
-                <img src="gcash-qr.png" alt="GCash QR Code">
+                <!-- Wrapper para isulod ang image ug scanner line -->
+                <div class="qr-image-wrapper">
+                    <img src="gcash-qr.png" alt="GCash QR Code">
+                    <div class="scanner-line"></div>
+                </div>
             </div>
             <br>
-            <!-- Bagong Download Button -->
             <a href="gcash-qr.png" download="Flores_GCash_QR.png" class="download-btn">
                 📥 SAVE QR TO GALLERY
             </a>
